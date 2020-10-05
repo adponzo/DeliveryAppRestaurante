@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Locais de entrega</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p *ngIf="deliveries.length == 0" class="ion-padding ion-text-center">
+    Nenhum local de entrega encontrado. <br />Clique em adicionar para incluir um novo local de entrega
+  </p>
+
+  <ion-list>
+    <ion-item *ngFor="let delivery of deliveries">
+
+      <ion-label>
+        <h1>{{delivery.neighborhood}}</h1>
+        <p><strong>Tempo de entrega:</strong> {{delivery.timeToDelivery}}</p>
+        <p *ngIf="delivery.free">
+          <ion-text color="success">Entrega grátis</ion-text>
+        </p>
+        <p *ngIf="!delivery.free">
+          <strong>Valor:</strong> {{delivery.value | currency:'BRL' }}
+        </p>
+
+         <!-- Action buttons -->
+         <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-button expand="block" color="secondary" (click)="remove(delivery)">
+                <ion-icon slot="start" name="trash"></ion-icon>
+                Remover
+              </ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button expand="block" color="secondary" [routerLink]="['edit', delivery._id]">
+                <ion-icon slot="start" name="pencil"></ion-icon>
+                Editar
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="primary">
+    <ion-fab-button [routerLink]="['new']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+

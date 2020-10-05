@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form (ngSubmit)="onSubmit()" #form="ngForm">
+
+    <ion-item>
+      <ion-label position="stacked">Bairro</ion-label>
+      <ion-input [(ngModel)]="deliveryModel.neighborhood" name="neighborhood" #neighborhood="ngModel" 
+        required 
+        minlength="5"></ion-input>
+      </ion-item>
+    <app-validation-container [control]="neighborhood.control" ></app-validation-container>
+
+    <ion-item>
+      <ion-label position="stacked">Tempo de entrega (minutos)</ion-label>
+      <ion-input [(ngModel)]="deliveryModel.timeToDelivery" name="timeToDelivery" #timeToDelivery="ngModel" type="number" min="0" 
+        required
+        appMinValueValidation="1"></ion-input>
+      </ion-item>
+      <app-validation-container [control]="timeToDelivery.control" ></app-validation-container>
+
+    <ion-item>
+      <ion-label>Entrega grátis?</ion-label>
+      <ion-checkbox [(ngModel)]="deliveryModel.free" name="free" slot="start" (ionChange)="onFreeCheckboxChange($event)"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Valor da entrega</ion-label>
+      <ion-input [(ngModel)]="deliveryModel.value" name="value" #value="ngModel" type="number" min="0"
+      [disabled]="deliveryModel.free"
+      [required]="!deliveryModel.free"
+      appMinValueValidation="1"></ion-input>
+    </ion-item>
+    <app-validation-container [control]="value.control" ></app-validation-container>
+    
+    <ion-button type="submit" class="ion-margin-vertical" color="primary" expand="block" [disabled]="form.form.invalid">
+      Salvar
+    </ion-button>
+  </form>
+</ion-content>
+
